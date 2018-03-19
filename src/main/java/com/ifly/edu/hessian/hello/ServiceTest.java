@@ -2,13 +2,12 @@ package com.ifly.edu.hessian.hello;
 
 import java.net.MalformedURLException;
 
-import org.junit.Test;
+
 
 import com.caucho.hessian.client.HessianProxyFactory;
 
 public class ServiceTest {
 
-    @Test
     public void testService() throws MalformedURLException {        
 
         String url = "http://localhost:8080/techStudy/hessian/service";
