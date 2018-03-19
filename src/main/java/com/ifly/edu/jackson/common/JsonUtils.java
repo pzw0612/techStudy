@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -92,6 +93,15 @@ public class JsonUtils {
             logger.error("json字符串转化为 list失败,原因" + e.toString());
             throw new IOException("json字符串转化为 list失败");
         }
+    }
+
+
+    public static void main(String[] args)  throws  Exception{
+        String json = "{\"name\":\"lijz\",\"id\":10}";
+        JsonNode node = objectMapper.readTree(json);
+        String name = node.get("name").asText();
+        int id = node.get("id").asInt();
+        System.out.println(name +":"+ id);
     }
 
 }
