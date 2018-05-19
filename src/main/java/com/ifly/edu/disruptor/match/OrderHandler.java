@@ -1,29 +1,34 @@
 package com.ifly.edu.disruptor.match;
 
 import com.lmax.disruptor.EventHandler;
-import org.aspectj.weaver.ast.Or;
+import org.apache.commons.lang3.time.StopWatch;
 
 import java.math.BigDecimal;
-import java.util.PriorityQueue;
+import java.util.concurrent.PriorityBlockingQueue;
+
 
 public class OrderHandler  implements EventHandler<Order>
 {
 
     //买单队列
-    private PriorityQueue<Order> buyQueue =  null;
+    private PriorityBlockingQueue<Order> buyQueue =  null;
     //卖单队列
-    private PriorityQueue<Order> sellQueue = null;
+    private PriorityBlockingQueue<Order> sellQueue = null;
 
-    public OrderHandler(PriorityQueue<Order> buyQueue ,PriorityQueue<Order> sellQueue ){
-        this.buyQueue = buyQueue;
-        this.sellQueue= sellQueue;
+    private StopWatch stopWatch;
+
+    public OrderHandler( StopWatch stopWatch){
+        buyQueue = new PriorityBlockingQueue<Order>(100000000,new OrderBuyCompartor());
+        //卖单队列
+        sellQueue = new PriorityBlockingQueue<Order>(100000000,new OrderSellCompartor());
+        this.stopWatch= stopWatch;
     }
 
-    public PriorityQueue<Order> getBuyQueue() {
+    public PriorityBlockingQueue<Order> getBuyQueue() {
         return buyQueue;
     }
 
-    public PriorityQueue<Order> getSellQueue() {
+    public PriorityBlockingQueue<Order> getSellQueue() {
         return sellQueue;
     }
 
@@ -34,6 +39,23 @@ public class OrderHandler  implements EventHandler<Order>
 
     //撮合逻辑
     public void match(Order order) {
+
+         if(order!=null && "end".equals(order.getUuid())){
+             stopWatch.stop();
+             System.out.println("耗时："+ stopWatch.getTime()/1000);
+
+             System.out.println("--------buy---------");
+             for (Order order2 : buyQueue) {
+                 System.out.println(order.toString());
+             }
+
+             System.out.println("---------sell----------");
+             for (Order order3 : sellQueue) {
+                 System.out.println(order.toString());
+             }
+             return;
+         }
+
         //首先判断订单类型,如果是买单则与卖单进行匹配，匹配成功生成
         if ("buy".equals(order.getTradeType())) {
             //如果卖单队列为空,则将订单加入买单队列中(按照价格优先,时间优先)
@@ -45,6 +67,7 @@ public class OrderHandler  implements EventHandler<Order>
             } else {
                 //将卖单队列中的订单取出进行撮合
                 Order orderSell = sellQueue.poll();
+
                 if (orderSell != null) {
                     if (order.getPrice().compareTo(orderSell.getPrice()) >= 0) {
                         //满足撮合条件则进行撮合,撮合的数量进行确定

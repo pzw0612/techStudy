@@ -1,5 +1,7 @@
 package com.ifly.edu.disruptor.match;
 
+import com.ifly.edu.jackson.common.JsonUtils;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 
@@ -24,6 +26,8 @@ public class Tx implements Serializable {
 
     private Integer orderStatus;//订单状态 2 完全成交 1部分成交 0 新订单
 
+    private long optime;
+
     public Tx() {
     }
 
@@ -37,6 +41,7 @@ public class Tx implements Serializable {
         this.dealPrice = dealPrice;
         this.dealQuantity = dealQuantity;
         this.orderStatus = orderStatus;
+        this.optime= System.currentTimeMillis();
     }
 
     public Integer getOrderStatus() {
@@ -111,18 +116,27 @@ public class Tx implements Serializable {
         this.dealQuantity = dealQuantity;
     }
 
+    public long getOptime() {
+        return optime;
+    }
+
+    public void setOptime(long optime) {
+        this.optime = optime;
+    }
+
     @Override
     public String toString() {
-        return "Tx{" +
-                "txType='" + txType + '\'' +
-                ", buyOrderId='" + buyOrderId + '\'' +
-                ", sellOrderId='" + sellOrderId + '\'' +
-                ", sellRemainAmt=" + sellRemainAmt +
-                ", buyRemainAmt=" + buyRemainAmt +
-                ", dealVolumePrice=" + dealVolumePrice +
-                ", dealPrice=" + dealPrice +
-                ", dealQuantity=" + dealQuantity +
-                ", orderStatus=" + orderStatus +
-                '}';
+//        return "Tx{" +
+//                "txType='" + txType + '\'' +
+//                ", buyOrderId='" + buyOrderId + '\'' +
+//                ", sellOrderId='" + sellOrderId + '\'' +
+//                ", sellRemainAmt=" + sellRemainAmt +
+//                ", buyRemainAmt=" + buyRemainAmt +
+//                ", dealVolumePrice=" + dealVolumePrice +
+//                ", dealPrice=" + dealPrice +
+//                ", dealQuantity=" + dealQuantity +
+//                ", orderStatus=" + orderStatus +
+//                '}';
+        return JsonUtils.toJsonString(this);
     }
 }

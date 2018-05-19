@@ -1,5 +1,7 @@
 package com.ifly.edu.disruptor.match;
 
+import com.ifly.edu.jackson.common.JsonUtils;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 
@@ -86,14 +88,15 @@ public class Order implements Serializable {
 
     @Override
     public String toString() {
-        return "Order{" +
-                "uuid='" + uuid + '\'' +
-                ", price=" + price +
-                ", amount=" + amount +
-                ", tradeType='" + tradeType + '\'' +
-                ", orderTime=" + orderTime +
-                ", orderStatus=" + orderStatus +
-                ", assetCode='" + assetCode + '\'' +
-                '}';
+//        return "Order{" +
+//                "uuid='" + uuid + '\'' +
+//                ", price=" + price +
+//                ", amount=" + amount +
+//                ", tradeType='" + tradeType + '\'' +
+//                ", orderTime=" + orderTime +
+//                ", orderStatus=" + orderStatus +
+//                ", assetCode='" + assetCode + '\'' +
+//                '}';
+        return JsonUtils.toJsonString(this);
     }
 }

@@ -3,6 +3,9 @@ package com.ifly.edu.jackson.common;
 import java.io.IOException;
 import java.util.List;
 
+
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.ifly.edu.jackson.User;
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.JsonParseException;
@@ -37,6 +40,8 @@ public class JsonUtils {
      */
     public static String toJsonString(Object obj) {
         try {
+
+
             return objectMapper.writeValueAsString(obj);
         } catch (JsonGenerationException e) {
             logger.error("转换为json字符串失败" + e.toString());
@@ -76,7 +81,7 @@ public class JsonUtils {
      * 还可以 直接使用  JsonUtils.getInstance().readValue(String content, new TypeReference<List<T>>(){})方式
      * @param <T>
      * @param content
-     * @param valueType
+     * @param
      * @return
      * @throws IOException 
      */
@@ -96,12 +101,36 @@ public class JsonUtils {
     }
 
 
-    public static void main(String[] args)  throws  Exception{
-        String json = "{\"name\":\"lijz\",\"id\":10}";
-        JsonNode node = objectMapper.readTree(json);
-        String name = node.get("name").asText();
-        int id = node.get("id").asInt();
-        System.out.println(name +":"+ id);
+    public static  void readThree(){
+        try{
+            String json = "{\"name\":\"lijz\",\"id\":10}";
+            JsonNode node = objectMapper.readTree(json);
+            String name = node.get("name").asText();
+            int id = node.get("id").asInt();
+
+            System.out.println("name:" + node.get("name").getTextValue());
+            System.out.println(name +":"+ id);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+    public static  void dataBind(){
+        try{
+            String json = "{\"name\":\"lijz\",\"id\":10}";
+
+            User user =  objectMapper.readValue(json, User.class);
+
+            System.out.println(user.getName() +":"+ user.getId());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+    public static void main(String[] args)  {
+
+        dataBind();
     }
 
 }
