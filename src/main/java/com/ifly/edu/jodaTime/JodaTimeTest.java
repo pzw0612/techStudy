@@ -1,8 +1,11 @@
 package com.ifly.edu.jodaTime;
 
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormatter;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * @Description: todo
@@ -58,11 +61,41 @@ public class JodaTimeTest {
         System.out.println("date_range_end6 = "+date_range_end6.toString("yyyyMMdd HH:mm:ss"));
 
 
-
-
         String currentSegmentStartTimeReq = new DateTime(new Date()).plusHours(8).toString("yyyyMMdd HH:mm:ss");
         System.out.println("currentSegmentStartTimeReq = "+currentSegmentStartTimeReq);
 
+
+
+        DateTime date_range_start7 = new DateTime(1526796000000l);
+        System.out.println("date_range_start7 = "+date_range_start7.toString("yyyyMMdd HH:mm:ss"));
+        DateTime date_range_end7  = new DateTime(1526810400005l);
+        System.out.println("date_range_end7 = "+date_range_end7.toString("yyyyMMdd HH:mm:ss"));
+
+        System.out.println("ms="+ date_range_end7.getMillis());
+
+        //2018-05-20 08:00:01
+
+        //DateTime date_range_start8 = DateTime.parse("2018-05-20 08:00:01");
+        //date_range_start8=date_range_start8.plus(0);
+        //System.out.println("date_range_start8 = "+date_range_start8.toString("yyyyMMdd HH:mm:ss"));
+
+        System.out.println("--------------");
+
+        dateParese();
+    }
+
+
+    public static  void dateParese(){
+        SimpleDateFormat sdf = new SimpleDateFormat("MMM d, yyyy K:m:s a",Locale.ENGLISH);
+        Date d2 = null;
+        try {
+            d2 = sdf.parse("Sep 29, 2012 1:00:01 AM");
+            System.out.println("--------------");
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
 
