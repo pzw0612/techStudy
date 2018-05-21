@@ -92,7 +92,7 @@ public class JodaTimeTest {
             d2 = sdf.parse("Sep 29, 2012 1:00:01 AM");
             System.out.println("--------------");
 
-
+            System.out.println("d2:"+ d2.toString());
         } catch (Exception e) {
             e.printStackTrace();
         }
