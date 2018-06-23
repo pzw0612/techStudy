@@ -32,8 +32,8 @@ public class OschinaBlog {
     private Date date; 
 
     public static void main(String[] args) {
-        OOSpider.create(
-            Site.me().addStartUrl("http://my.oschina.net/flashsword/blog"),
-            new ConsolePageModelPipeline(), OschinaBlog.class).run();
+//        OOSpider.create(
+//            Site.me().addStartUrl("http://my.oschina.net/flashsword/blog"),
+//            new ConsolePageModelPipeline(), OschinaBlog.class).run();
     }
 }

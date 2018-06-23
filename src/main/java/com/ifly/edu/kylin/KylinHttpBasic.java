@@ -315,26 +315,7 @@ public class KylinHttpBasic {
 
     public static void main(String[] args) {
 
-        String KYLIN_CUBE_BUILD_FORMAT="{\"startTime\": '%d',\"endTime\": '%d',\"buildType\": \"BUILD\"}";
 
-        Date startDate=DateUtil.parseStrToDate("20180422120000",DateUtil.DATE_TIME_FORMAT_YYYYMMDDHHMISS);
-        Date stopDate= DateUtil.parseStrToDate("20180422130000",DateUtil.DATE_TIME_FORMAT_YYYYMMDDHHMISS);
-
-        long currentSegmentStartTime=startDate.getTime();
-        long currentSegmentStopTime=stopDate.getTime();
-        //String baseUrl="http://127.0.0.1:7070/kylin/api";
-        String body =String.format(KYLIN_CUBE_BUILD_FORMAT, currentSegmentStartTime,currentSegmentStopTime);
-        System.out.println(body);
-
-        try {
-            login("ADMIN","KYLIN");
-            String rsp =buildCube("hft_order_view_5_cube_clone", body);
-            System.out.println("rsp:"+ rsp);
-        }catch(Exception e) {
-            e.printStackTrace();
-        }finally {
-
-        }
 
     }
 

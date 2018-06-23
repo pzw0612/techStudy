@@ -88,39 +88,39 @@ public class LuceneTest {
   */
  public void LuceneTest() throws IOException{
      
-     String path = "D:\\index";
-     String pdfpath = "D:\\index\\Lucene.Net基本用法.pdf";
-     
-     IndexWriter writer = new IndexWriter(path, new StandardAnalyzer(),true);
-     //writer.setMaxFieldLength(10240);
-     //LucenePDFDocument返回由PDF产生的Lucene Document
-     Document d = LucenePDFDocument.getDocument(new File(pdfpath));
-     //System.out.println(d);
-     //写入索引
-     writer.addDocument(d);
-     writer.close();
-     
-     //读取d:\index下的索引文件，建立IndexSearcher
-     IndexSearcher searcher = new IndexSearcher(path);
-     //对索引的contents Field进行关键字Query的查找
-     Term t = new Term("contents","优");
-     Term m = new Term("contents","化");
-     PhraseQuery q = new PhraseQuery();
-     q.add(t);
-     q.add(m);
-     //Query q = new TermQuery(t);
-     TopDocCollector co = new TopDocCollector(10);
-     searcher.search(q,co);
-     
-     Document document;
-     TopDocs docs = co.topDocs();
-     ScoreDoc[] doc = docs.scoreDocs;
-     //System.out.println(doc.length);
-     
-     for(int i=0;i<doc.length;i++){
-         System.out.println("文档编号：" + doc[i].doc);
-         //document = searcher.doc(doc[i].doc);
-     }
+//     String path = "D:\\index";
+//     String pdfpath = "D:\\index\\Lucene.Net基本用法.pdf";
+//
+//     IndexWriter writer = new IndexWriter(path, new StandardAnalyzer(),true);
+//     //writer.setMaxFieldLength(10240);
+//     //LucenePDFDocument返回由PDF产生的Lucene Document
+//     Document d = LucenePDFDocument.getDocument(new File(pdfpath));
+//     //System.out.println(d);
+//     //写入索引
+//     writer.addDocument(d);
+//     writer.close();
+//
+//     //读取d:\index下的索引文件，建立IndexSearcher
+//     IndexSearcher searcher = new IndexSearcher(path);
+//     //对索引的contents Field进行关键字Query的查找
+//     Term t = new Term("contents","优");
+//     Term m = new Term("contents","化");
+//     PhraseQuery q = new PhraseQuery();
+//     q.add(t);
+//     q.add(m);
+//     //Query q = new TermQuery(t);
+//     TopDocCollector co = new TopDocCollector(10);
+//     searcher.search(q,co);
+//
+//     Document document;
+//     TopDocs docs = co.topDocs();
+//     ScoreDoc[] doc = docs.scoreDocs;
+//     //System.out.println(doc.length);
+//
+//     for(int i=0;i<doc.length;i++){
+//         System.out.println("文档编号：" + doc[i].doc);
+//         //document = searcher.doc(doc[i].doc);
+//     }
  }
  /** *//**
   * @param args

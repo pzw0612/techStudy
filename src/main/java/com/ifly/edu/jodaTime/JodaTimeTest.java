@@ -1,11 +1,14 @@
 package com.ifly.edu.jodaTime;
 
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.joda.time.format.DateTimeFormatter;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  * @Description: todo
@@ -14,6 +17,86 @@ import java.util.Locale;
  **/
 public class JodaTimeTest {
     public static void main(String[] args) {
+
+
+        //'2018-05-20 10:00:01',	'2018-05-21 06:00:01'  hft_withdrawal_deposit_view_model_cube
+        System.out.println(dateParese("2018-05-20 10:00:01"));
+        System.out.println(dateParese("2018-05-21 06:00:02"));
+        System.out.println("----");
+        //'2018-05-21 06:00:02',	'2018-05-21 08:00:02'  user_login_log_view_model_cube
+        System.out.println(dateParese("2018-05-21 05:00:03"));
+        System.out.println(dateParese("2018-05-21 06:00:02"));
+        System.out.println("----");
+        //'2018-05-20 14:00:01',	'2018-05-21 14:00:02'  hft_user_order_view_by_day_cube
+        System.out.println(dateParese("2018-05-20 14:00:01"));
+        System.out.println(dateParese("2018-05-21 14:00:02"));
+        System.out.println("----");
+
+
+        System.out.println(dateParese("2018-05-21 06:00:00"));
+
+
+
+        System.out.println(dateParese("2018-05-30 00:00:00"));
+
+        cubeSegment();
+
+        System.out.println("----");
+        System.out.println(dateParese("2017-09-17 00:00:01"));
+        System.out.println(dateParese("2018-01-05 00:00:01"));
+        System.out.println(dateParese("2018-05-28 10:55:18"));
+
+        System.out.println("----");
+        DateTime date_range_start8 = new DateTime(dateParese("2018-05-28 10:55:18"));
+        date_range_start8=date_range_start8.plusHours(8);
+
+        System.out.println("date_range_start8:"+ date_range_start8.getMillis());
+//        String date="2018-05-21 14:00:01";
+//        System.out.println("\"2018-05-21 14:00:01="+dateParese(date));
+
+        //DateTime tt =new DateTime(dateParese("2018-05-21 06:00:00"),DateTimeZone.forID("CST"));
+
+
+//        Calendar calendar = Calendar.getInstance();
+//        calendar.setTimeZone(TimeZone.getTimeZone("GMT"));
+//        Date date = new Date(1391174450000L); // 2014-1-31 21:20:50
+//        calendar.setTime(date);
+//
+//        System.out.println("date = [" + date + "]");
+//        DateTime tt =new DateTime(calendar.getTime(),DateTimeZone.forID("GMT"));
+//        System.out.println("tt = [" + tt + "]");
+
+    }
+
+
+    public static  void dateParese(){
+        SimpleDateFormat sdf = new SimpleDateFormat("MMM d, yyyy",Locale.ENGLISH);
+        SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
+        Date d2 = null;
+        try {
+            d2 = sdf.parse("May 20, 2018");
+
+            System.out.println("d2="+ sdf2.format(d2));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public static  long dateParese(String datestr){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date d2 = null;
+        try {
+            d2 = sdf.parse(datestr);
+            return d2.getTime();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0l;
+    }
+
+    public static void cubeSegment(){
 
         DateTime last_modified = new DateTime(1526459463599l);
         System.out.println("last_modified = "+last_modified.toString("yyyyMMdd HH:mm:ss"));
@@ -82,20 +165,74 @@ public class JodaTimeTest {
         System.out.println("--------------");
 
         dateParese();
+
+
+        DateTime date_range_end8  = new DateTime(1526882539558l);
+        System.out.println("date_range_end8 = "+date_range_end8.toString("yyyyMMdd HH:mm:ss SSS"));
+
+
+        date_range_end8  = new DateTime(1526902200035l);
+        System.out.println("date_range_end8 = "+date_range_end8.toString("yyyyMMdd HH:mm:ss SSS"));
+
+
+
+        //1526853602000_1526976000211
+         date_range_end8  = new DateTime(1526853602000l);
+        System.out.println("date_range_end8 = "+date_range_end8.toString("yyyyMMdd HH:mm:ss SSS"));
+
+
+        date_range_end8  = new DateTime(1526976000211l);
+        System.out.println("date_range_end8 = "+date_range_end8.toString("yyyyMMdd HH:mm:ss SSS"));
+
+
+        date_range_end8  = new DateTime(1526853602000l);
+        System.out.println("date_range_end8 = "+date_range_end8.toString("yyyyMMdd HH:mm:ss SSS"));
+
+        date_range_end8  = new DateTime(1526983200792l);
+        System.out.println("date_range_end8 = "+date_range_end8.toString("yyyyMMdd HH:mm:ss SSS"));
+//        long currentSegmentStartTime;
+//        DateTime dt =new DateTime(1526853602000l).plusHours(0);
+//        System.out.println("dt = "+dt.toString("yyyyMMdd HH:mm:ss SSS"));
+
+
+
     }
 
 
-    public static  void dateParese(){
-        SimpleDateFormat sdf = new SimpleDateFormat("MMM d, yyyy K:m:s a",Locale.ENGLISH);
-        Date d2 = null;
-        try {
-            d2 = sdf.parse("Sep 29, 2012 1:00:01 AM");
-            System.out.println("--------------");
+    //T代表后面跟着时间，Z代表UTC统一时间
+    String tpTme = "2014-11-11T14:00:00+0800";
+    String pmTime = "2014-11-07T14:00:00Z";
 
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public void testTPTime() throws Exception {
+//2014-11-11T14:00:00+08:00
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+        String time = format.format(new Date());
+        System.out.println(time);
+
+    }
+
+    public void testPMTime() throws Exception {
+//2014-11-07T14:00:00Z
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+        String time = format.format(new Date());
+        System.out.println(time);
+    }
+
+    //转换回来
+
+    public void testParsePMTime() throws Exception {
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+        Date time = df.parse(pmTime);
+        System.out.println(time);
+    }
+
+    //转换回来
+
+    public void testParseTPTime() throws Exception {
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+        Date time = df.parse(tpTme);
+        System.out.println(time);
     }
 }
 
